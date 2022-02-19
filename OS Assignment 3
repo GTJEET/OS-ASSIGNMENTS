@@ -4,7 +4,11 @@ using namespace std;
  
 int main()
 {
-    int n,bt[35],wt[35],tat[35],avgwt=0,avgtat=0,i,j;
+    float n, at[35], bt[35], wt[35], tat[35], ct[35], avgwt=0, avgtat=0;
+    int i,j;
+    
+    
+    
     cout<<"Enter total number of processes (maximum of 35): ";   //helps to input the number of processes
     cin>>n;
  
@@ -14,9 +18,16 @@ int main()
         cout<<"Process Number "<< i+1 <<" : ";
         cin>>bt[i];
     }
- 
-    wt[0]=0;    
- 
+    
+    cout << "\nEnter Process Arrival Time (AT)\n";
+    for(i=0;i<n;i++)
+    {
+        cout<<"Process Number "<< i+1 <<" : ";
+        cin>>at[i];
+    }
+    
+    wt[0] = 0;    
+    ct[0] = bt[0];
     for(i=1;i<n;i++)
     {
         wt[i]=0;
@@ -27,20 +38,24 @@ int main()
     cout << "\nBT = Burst Time";
     cout << "\nWT = Waiting Time";
     cout << "\nTAT = Total Turnaround Time\n\n";
-    cout<<"\nProcess\t\t\t\tBT \t\tWT\t       TAT";
+    cout<<"\nProcess\t\t\t\tAT \t\tBT \t\tCT \t\tTAT";
  
     for(i=0;i<n;i++)
     {
-        tat[i]=bt[i]+wt[i];
+        ct[i]=bt[i]+wt[i];
+        tat[i] = ct[i] - at[i];
+        wt[i] = tat[i] - bt[i];
         avgwt+=wt[i];
         avgtat+=tat[i];
-        cout<<"\nProcess number "<< i+1 << "\t\t" << bt[i] << "\t\t" << wt[i] << "\t\t" <<tat[i];
+        cout<<"\nProcess number "<< i+1 << "\t\t" << at[i] << "\t\t" <<bt[i] << "\t\t" << ct[i] << "\t\t" << tat[i] << "\t\t" << wt[i];
     }
  
     avgwt/=i;
     avgtat/=i;
-    cout<<"\n\nAverage WT : "<< avgwt;
-    cout<<"\nAverage TAT :"<< avgtat;
+    cout <<"\n\nAverage WT = "<< avgwt;
+    cout <<"\nAverage TAT = "<< avgtat;
+    cout << "\n Total WT = " << avgwt*2;
+    cout << "\nTotal TAT = " << avgtat*2;
  
     return 0;
 }
