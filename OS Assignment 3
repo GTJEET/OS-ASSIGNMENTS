@@ -38,7 +38,7 @@ int main()
     cout << "\nBT = Burst Time";
     cout << "\nWT = Waiting Time";
     cout << "\nTAT = Total Turnaround Time\n\n";
-    cout<<"\nProcess\t\t\t\tAT \t\tBT \t\tCT \t\tTAT";
+    cout<<"\nProcess\t\t\t\tAT \t\tBT \t\tCT \t\tTAT \t\tWT";
  
     for(i=0;i<n;i++)
     {
@@ -54,8 +54,8 @@ int main()
     avgtat/=i;
     cout <<"\n\nAverage WT = "<< avgwt;
     cout <<"\nAverage TAT = "<< avgtat;
-    cout << "\n Total WT = " << avgwt*2;
-    cout << "\nTotal TAT = " << avgtat*2;
+    cout << "\n Total WT = " << avgwt*n;
+    cout << "\nTotal TAT = " << avgtat*n;
  
     return 0;
 }
