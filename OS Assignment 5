@@ -1,0 +1,74 @@
+#include <iostream>
+using namespace std;
+
+int mutex = 1; //global variable mutex has been assigned the value of 1
+ 
+int full = 0;//global variable full has been assigned the vale of 0
+ 
+int empty = 15, x = 0; //size of the buffer has been set to 15
+ 
+void producer() //produces items
+{
+    --mutex;
+    ++full;
+    --empty;
+    x++;
+    
+    cout << "\nProducer produces item " << x << endl;
+    ++mutex;
+}
+ 
+void consumer() //consumes items
+{
+    --mutex;
+    --full;
+    ++empty;
+    cout << "\nConsumer consumes item " << x << endl;
+    x--;
+    ++mutex;
+}
+ 
+int main()
+{
+    int n, i;
+    cout << "\n1. Press 1 for Producer";
+    cout << "\n2. Press 2 for Consumer";
+    cout << "\n3. Press 3 for Exit";
+    cout << "\n\n(NOTE: THE BUFFER SIZE HAS BEEN SET TO 15)\n";
+ 
+    for (i = 1; i > 0; i++) 
+    {
+ 
+        cout << "\nEnter your choice: ";
+        cin >> n;
+ 
+        switch (n)
+        {
+            case 1:
+                if ((mutex == 1) && (empty != 0)) 
+                {
+                    producer(); //executes producer function
+                }
+                else 
+                {
+                    cout << "\nBuffer is full! Overflow Condition has been achieved.\n";
+                }
+            break;
+ 
+            case 2:
+                if ((mutex == 1) && (full != 0)) 
+                {
+                    consumer(); //executes consumer function
+                }
+ 
+                else 
+                {
+                    cout << "\nBuffer is empty! Underflow Condition has been achieved\n";
+                }
+            break;
+            
+            case 3: exit(0);
+            break;
+        }
+    }
+}
