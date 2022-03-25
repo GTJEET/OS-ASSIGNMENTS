@@ -1,0 +1,151 @@
+#include <iostream>
+using namespace std;
+
+void firstf(int proc[], int block[], int m, int n) //Function for First fit algo 
+{
+    int alloc[n];           //for storing the allocations
+    for (int i=1; i<=n; i++)
+    {
+        for (int j=1; j<=m; j++)
+        {
+            if (block[j]>=proc[i])      //if the process size is less than block size 
+            {
+                alloc[i]=j;             //then allocate
+                block[j]-=proc[i];      //space available in the block
+                break;   
+            }
+        }
+    }
+    cout<<"\nProcess \tProcess Size \tBlock no.\n";     //Display all details
+    for(int i=1; i<=n; i++)
+    {
+        cout<<" "<<i<<"\t\t"<<proc[i]<<"\t\t";
+        if(alloc[i]!=0)
+        {
+            cout<<alloc[i];
+        }
+        else
+        {
+            cout<<"Not Allocated";
+        }
+        cout<<"\n\n";
+    }
+}
+void bestf(int proc[], int block[], int m, int n)   //Function for Best fit algo
+{
+    int alloc[n];               //for storing allocations
+    for (int i=1; i<=n; i++)
+    {
+        alloc[i]=-1;            //Allocation is initially empty
+    }
+    for (int i=1; i<=n; i++)    
+        {
+            int best=-1;        //to assign the best fit for the current process    
+            for(int j=1; j<=m; j++)
+            {
+                if (proc[i]<=block[j])
+                {
+                    if(best == -1)
+                        best=j;
+                    else if (block[best]> block[j])
+                        best=j; 
+                }
+            }
+            if (best!=-1)       //if best block is found and the best integer holds some value
+            {
+                alloc[i] = best;    //then allocate to the block
+                block[best]-=proc[i];   //available space in the block
+            }
+        }
+    cout<<"\nProcess \tProcess Size \tBlock no.\n";     //Display all details
+    for(int i=1; i<=n; i++)         
+    {
+        cout<<" "<<i<<"\t\t"<<proc[i]<<"\t\t";
+        if(alloc[i]!=0)
+        {
+            cout<<alloc[i];
+        }
+        else
+        {
+            cout<<"Not Allocated";
+        }
+        cout<<"\n\n";
+    }    
+}
+void worstf(int proc[], int block[], int m, int n)      //Function for worst fit algorithm
+{
+    int alloc[n];       //for storing the allocations 
+    for (int i=1; i<=n; i++)
+    {
+        int worst =-1;      //Worst vslue initially empty
+        for (int j=1; j<=m; j++)
+        {
+            if (block[j]>=proc[i])  //to find the worst allocation
+            {
+                if(worst==-1)
+                {
+                    worst=j;
+                }
+                else if (block[worst]<block[j])
+                {
+                    worst=j;
+                }
+            }
+        }
+        if (worst!=-1)      //if worst allocation is found and the value is not empty
+        {
+            alloc[i]=worst;     //then allocate value
+            block[worst]-=proc[i];
+        }
+    }
+    cout<<"\nProcess \tProcess Size \tBlock no.\n";     //Display all details
+    for(int i=1; i<=n; i++)             
+    {
+        cout<<" "<<i<<"\t\t"<<proc[i]<<"\t\t";
+        if(alloc[i]!=0)
+        {
+            cout<<alloc[i];
+        }
+        else
+        {
+            cout<<"Not Allocated";
+        }
+        cout<<"\n\n";
+    }    
+}
+int main()      //main function
+{
+    int proc[10], block[10], b, p, ch;
+    cout<<"Enter the Number of Blocks: ";
+    cin>>b; 
+    for (int i=1; i<=b; i++)
+    {
+        cout<<"Enter the Block Size for Block "<<i<<": ";
+        cin>>block[i];
+    }
+    cout<<"\nEnter the Number of Process: ";
+    cin>>p;
+    for (int i=1; i<=p; i++)
+    {
+        cout<<"Enter the Process Size for Process "<<i<<": ";
+        cin>>proc[i];
+    }
+    while(ch!=0)
+    {
+    cout<<"\nChoose the method for Memory Management\n1. First Fit\n2. Best Fit\n3. Worst Fit\n0. Exit";
+    cout<<"\nEnter your choice: ";
+    cin>>ch;
+    switch(ch)
+    {
+        case 1: firstf(proc, block, b, p);
+                break;
+        case 2: bestf(proc, block, b, p);
+                break;
+        case 3: worstf(proc, block, b, p);
+                break;
+        case 0: cout<<"\nYou have exitted the program succesfully!!!";
+                exit(0);
+        default: cout<<"\nYou have entered a Wrong Choice!!!\nPROGRAM TERMINATED";
+    } 
+    }  
+}
